@@ -14,6 +14,9 @@
 		2CA47D8D2A0927F1009531F5 /* EntryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CA47D8C2A0927F1009531F5 /* EntryViewController.swift */; };
 		2CA47D8F2A092B75009531F5 /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CA47D8E2A092B75009531F5 /* UIView.swift */; };
 		2CA47D912A093875009531F5 /* FactorCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CA47D902A093875009531F5 /* FactorCollectionCell.swift */; };
+		2CA47D952A0945A3009531F5 /* UITextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CA47D942A0945A3009531F5 /* UITextField.swift */; };
+		2CA47D972A094828009531F5 /* EntryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CA47D962A094828009531F5 /* EntryViewModel.swift */; };
+		2CA47D992A09483F009531F5 /* EntryViewEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CA47D982A09483F009531F5 /* EntryViewEvent.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +29,9 @@
 		2CA47D8C2A0927F1009531F5 /* EntryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryViewController.swift; sourceTree = "<group>"; };
 		2CA47D8E2A092B75009531F5 /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
 		2CA47D902A093875009531F5 /* FactorCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FactorCollectionCell.swift; sourceTree = "<group>"; };
+		2CA47D942A0945A3009531F5 /* UITextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextField.swift; sourceTree = "<group>"; };
+		2CA47D962A094828009531F5 /* EntryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryViewModel.swift; sourceTree = "<group>"; };
+		2CA47D982A09483F009531F5 /* EntryViewEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryViewEvent.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,6 +80,7 @@
 			isa = PBXGroup;
 			children = (
 				2CA47D8E2A092B75009531F5 /* UIView.swift */,
+				2CA47D942A0945A3009531F5 /* UITextField.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -105,6 +112,7 @@
 		2CA47D842A092445009531F5 /* Entry Screen */ = {
 			isa = PBXGroup;
 			children = (
+				2CA47D9A2A094846009531F5 /* Model */,
 				2CA47D892A0924A6009531F5 /* ViewModel */,
 				2CA47D882A0924A0009531F5 /* View */,
 			);
@@ -146,8 +154,17 @@
 		2CA47D892A0924A6009531F5 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				2CA47D962A094828009531F5 /* EntryViewModel.swift */,
 			);
 			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		2CA47D9A2A094846009531F5 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				2CA47D982A09483F009531F5 /* EntryViewEvent.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -223,8 +240,11 @@
 				2CA47D8F2A092B75009531F5 /* UIView.swift in Sources */,
 				2CA47D8B2A0925FA009531F5 /* Style.swift in Sources */,
 				2CA47D6D2A0923A4009531F5 /* AppDelegate.swift in Sources */,
+				2CA47D972A094828009531F5 /* EntryViewModel.swift in Sources */,
 				2CA47D8D2A0927F1009531F5 /* EntryViewController.swift in Sources */,
 				2CA47D912A093875009531F5 /* FactorCollectionCell.swift in Sources */,
+				2CA47D992A09483F009531F5 /* EntryViewEvent.swift in Sources */,
+				2CA47D952A0945A3009531F5 /* UITextField.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

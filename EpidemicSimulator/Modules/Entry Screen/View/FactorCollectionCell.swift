@@ -14,7 +14,6 @@ final class FactorCollectionCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
         layout()
     }
     
@@ -24,6 +23,14 @@ final class FactorCollectionCell: UICollectionViewCell {
     
     func setNumber(for indexPath: IndexPath) {
         label.text = "\(indexPath.row + 1)"
+    }
+    
+    func select() {
+        contentView.backgroundColor = Styles.Color.yellow
+    }
+    
+    func deselect() {
+        contentView.backgroundColor = Styles.Color.mustardWithAlpha
     }
     
     private func layout() {
