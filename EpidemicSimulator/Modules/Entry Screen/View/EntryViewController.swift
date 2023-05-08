@@ -7,18 +7,16 @@
 
 import UIKit
 import Combine
-#warning("TODO: add insets for input view")
-#warning("TODO: input view to custom view")
 #warning("TODO: scroll for keyboard")
 
 final class EntryViewController: UIViewController {
     
     private lazy var captureLabel = UILabel()
     private lazy var groupSizeLabel = UILabel()
-    private lazy var groupSizeInput = UITextField()
+    private lazy var groupSizeInput = CustomTextField()
     private lazy var infectionFactorLabel = UILabel()
     private lazy var calculationFrequencyLabel = UILabel()
-    private lazy var calculationFrequencyInput = UITextField()
+    private lazy var calculationFrequencyInput = CustomTextField()
     
     private var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -117,12 +115,8 @@ final class EntryViewController: UIViewController {
     
     private func groupSizeSetup() {
         view.addSubviews([groupSizeLabel, groupSizeInput])
-        
-        groupSizeInput.placeholder = "20"
-        groupSizeInput.backgroundColor = Styles.Color.mustardWithAlpha
-        groupSizeInput.keyboardType = .numberPad
-        groupSizeInput.layer.cornerRadius = Styles.cornerRadius
-        groupSizeInput.layer.masksToBounds = true
+
+        groupSizeInput.setPlaceholder("number of future victims")
         
         NSLayoutConstraint.activate([
             groupSizeInput.heightAnchor.constraint(equalToConstant: 50),
@@ -131,7 +125,7 @@ final class EntryViewController: UIViewController {
             groupSizeInput.bottomAnchor.constraint(equalTo: infectionFactorLabel.topAnchor, constant: -Styles.padding)
         ])
         
-        groupSizeLabel.text = "group size (victims)"
+        groupSizeLabel.text = "group size"
         groupSizeLabel.font = Styles.mainFont
         groupSizeLabel.textColor = Styles.Color.yellow
         
@@ -173,12 +167,7 @@ final class EntryViewController: UIViewController {
     
     private func calculationFrequencySetup() {
         view.addSubviews([calculationFrequencyLabel, calculationFrequencyInput])
-        
-        calculationFrequencyInput.placeholder = "20"
-        calculationFrequencyInput.backgroundColor = Styles.Color.mustardWithAlpha
-        calculationFrequencyInput.keyboardType = .numberPad
-        calculationFrequencyInput.layer.cornerRadius = Styles.cornerRadius
-        calculationFrequencyInput.layer.masksToBounds = true
+        calculationFrequencyInput.setPlaceholder("potential DEADline for neighbors")
         
         NSLayoutConstraint.activate([
             calculationFrequencyInput.heightAnchor.constraint(equalToConstant: 50),
@@ -201,7 +190,7 @@ final class EntryViewController: UIViewController {
     
     private func runButtonSetup() {
         runButton.setTitle("run", for: .normal)
-        runButton.setTitle("you should fill fields", for: .disabled)
+        runButton.setTitle("you should fill all fields", for: .disabled)
         runButton.setTitleColor(Styles.Color.black, for: .normal)
         runButton.setTitleColor(Styles.Color.mustardWithAlpha, for: .disabled)
         

@@ -17,6 +17,7 @@
 		2CA47D952A0945A3009531F5 /* UITextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CA47D942A0945A3009531F5 /* UITextField.swift */; };
 		2CA47D972A094828009531F5 /* EntryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CA47D962A094828009531F5 /* EntryViewModel.swift */; };
 		2CA47D992A09483F009531F5 /* EntryViewEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CA47D982A09483F009531F5 /* EntryViewEvent.swift */; };
+		2CA47D9E2A0948EB009531F5 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CA47D9D2A0948EB009531F5 /* CustomTextField.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,7 @@
 		2CA47D942A0945A3009531F5 /* UITextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextField.swift; sourceTree = "<group>"; };
 		2CA47D962A094828009531F5 /* EntryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryViewModel.swift; sourceTree = "<group>"; };
 		2CA47D982A09483F009531F5 /* EntryViewEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryViewEvent.swift; sourceTree = "<group>"; };
+		2CA47D9D2A0948EB009531F5 /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,6 +66,7 @@
 		2CA47D6B2A0923A4009531F5 /* EpidemicSimulator */ = {
 			isa = PBXGroup;
 			children = (
+				2CA47D9B2A0948C4009531F5 /* CustomUI */,
 				2CA47D802A09242D009531F5 /* Extensions */,
 				2CA47D822A09243A009531F5 /* Services */,
 				2CA47D832A092440009531F5 /* Support */,
@@ -167,6 +170,22 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		2CA47D9B2A0948C4009531F5 /* CustomUI */ = {
+			isa = PBXGroup;
+			children = (
+				2CA47D9C2A0948CD009531F5 /* CustomTextField */,
+			);
+			path = CustomUI;
+			sourceTree = "<group>";
+		};
+		2CA47D9C2A0948CD009531F5 /* CustomTextField */ = {
+			isa = PBXGroup;
+			children = (
+				2CA47D9D2A0948EB009531F5 /* CustomTextField.swift */,
+			);
+			path = CustomTextField;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -245,6 +264,7 @@
 				2CA47D912A093875009531F5 /* FactorCollectionCell.swift in Sources */,
 				2CA47D992A09483F009531F5 /* EntryViewEvent.swift in Sources */,
 				2CA47D952A0945A3009531F5 /* UITextField.swift in Sources */,
+				2CA47D9E2A0948EB009531F5 /* CustomTextField.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
