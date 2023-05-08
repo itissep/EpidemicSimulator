@@ -32,7 +32,7 @@ final class CustomTextField: UITextField {
     func setPlaceholder(_ placeholderString: String) {
         self.attributedPlaceholder = NSAttributedString(string: placeholderString,
                                                         attributes: [.foregroundColor: Styles.Color.mustard ?? .yellow,
-                                                                     .font: Styles.mainFont])
+                                                                     .font: Styles.inputFont])
     }
     
     private func layout() {
@@ -41,7 +41,7 @@ final class CustomTextField: UITextField {
         self.layer.cornerRadius = Styles.cornerRadius
         self.layer.masksToBounds = true
         
-        self.font = Styles.mainFont
+        self.font = Styles.inputFont
         self.textColor = Styles.Color.yellow
     }
 }

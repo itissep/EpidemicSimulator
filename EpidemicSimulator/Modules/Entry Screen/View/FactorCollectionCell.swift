@@ -40,7 +40,7 @@ final class FactorCollectionCell: UICollectionViewCell {
         
         contentView.addSubviews([label])
         label.textColor = Styles.Color.black
-        label.font = Styles.mainFont
+        label.font = Styles.inputFont
         label.textAlignment = .center
         
         NSLayoutConstraint.activate([

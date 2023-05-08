@@ -8,6 +8,7 @@
 import UIKit
 import Combine
 #warning("TODO: scroll for keyboard")
+#warning("TODO: add bar style")
 
 final class EntryViewController: UIViewController {
     
@@ -102,7 +103,7 @@ final class EntryViewController: UIViewController {
     private func captureSetup() {
         captureLabel.text = "Fancy starting a new pandemic?".lowercased()
         captureLabel.numberOfLines = 0
-        captureLabel.font = Styles.mainFont
+        captureLabel.font = Styles.inputFont
         captureLabel.textColor = Styles.Color.mustardWithAlpha
         
         view.addSubviews([captureLabel])
@@ -126,7 +127,7 @@ final class EntryViewController: UIViewController {
         ])
         
         groupSizeLabel.text = "group size"
-        groupSizeLabel.font = Styles.mainFont
+        groupSizeLabel.font = Styles.inputFont
         groupSizeLabel.textColor = Styles.Color.yellow
         
         NSLayoutConstraint.activate([
@@ -138,7 +139,7 @@ final class EntryViewController: UIViewController {
     
     private func infectionFactorSetup() {
         infectionFactorLabel.text = "infection factor"
-        infectionFactorLabel.font = Styles.mainFont
+        infectionFactorLabel.font = Styles.inputFont
         infectionFactorLabel.textColor = Styles.Color.yellow
         view.addSubviews([infectionFactorLabel])
         NSLayoutConstraint.activate([
@@ -178,7 +179,7 @@ final class EntryViewController: UIViewController {
         
         
         calculationFrequencyLabel.text = "calculation frequency (secs)"
-        calculationFrequencyLabel.font = Styles.mainFont
+        calculationFrequencyLabel.font = Styles.inputFont
         calculationFrequencyLabel.textColor = Styles.Color.yellow
         
         NSLayoutConstraint.activate([
@@ -246,7 +247,6 @@ extension EntryViewController: UICollectionViewDataSource {
         guard let cell = cell as? FactorCollectionCell else {
             fatalError("Error with FactorCollectionCell")
         }
-        cell.setNumber(for: indexPath)
         return cell
     }
 }
