@@ -9,55 +9,59 @@ import Foundation
 import Combine
 
 final class VisualizationViewModel: NSObject {
-    #warning("TODO: dispatchQueue")
-    #warning("TODO: published vs didSet")
-    @Published var itemsPerLine: CGFloat = 6 {
-        didSet {
-            calculator.changeLineNumber(with: Int(itemsPerLine))
-        }
-    }
+    @Published var itemsPerLine: CGFloat = 6
     @Published var cellModels: [VictimModel] = []
     
     private var eventPublisher: AnyPublisher<VisualizationViewEvent, Never> = PassthroughSubject<VisualizationViewEvent, Never>().eraseToAnyPublisher()
     private var subscriptions = Set<AnyCancellable>()
     
-    private var calculator: EpidemicCalculator
+    private var calculator: EpidemicCalculatorDescription
     private var frequency: Int
     
     init(groupSize: Int, factor: Int, frequency: Int) {
-        self.calculator = EpidemicCalculator(factor: factor, count: groupSize)
+        self.calculator = EpidemicCalculator(factor: factor, count: groupSize, interval: frequency)
         self.frequency = frequency
         self.cellModels = []
         super.init()
         
-        updateSickPopulation()
+        calculator.delegate = self
     }
-    
-    func updateSickPopulation() {
-        cellModels = calculator.getAll().map({VictimModel($0)})
-    }
-    
     
     func attachEventListener(with subject: AnyPublisher<VisualizationViewEvent, Never>) {
         self.eventPublisher = subject
         eventPublisher
             .sink { [weak self] event in
                 switch event {
-                case .plusPressed:
-                    guard self?.itemsPerLine != 5 else { return }
-                    self?.itemsPerLine -= 1
-                case .minusPressed:
-                    guard self?.itemsPerLine != 20 else { return }
-                    self?.itemsPerLine += 1
+                case .plusPressed, .minusPressed:
+                    self?.changeLineNumber(for: event)
                 case .pause:
                     break
                 case .stop:
                     break
                 case .wasSelectedAt(let indexPath):
                     self?.calculator.add(with: indexPath.row)
-                    self?.updateSickPopulation()
                 }
             }
             .store(in: &subscriptions)
+    }
+    
+    private func changeLineNumber(for event: VisualizationViewEvent) {
+
+        if event == .minusPressed {
+            guard itemsPerLine < 21 else { return }
+            itemsPerLine += 1
+        } else {
+            guard itemsPerLine > 5 else { return }
+            itemsPerLine -= 1
+        }
+        calculator.changeLineNumber(with: Int(itemsPerLine))
+    }
+}
+
+// MARK: - EpidemicCalculatorDelegate
+
+extension VisualizationViewModel: EpidemicCalculatorDelegate {
+    func update(with items: [Bool]) {
+        cellModels = items.map({VictimModel($0)})
     }
 }

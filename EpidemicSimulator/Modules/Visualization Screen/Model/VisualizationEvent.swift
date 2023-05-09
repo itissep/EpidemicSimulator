@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum VisualizationViewEvent {
+enum VisualizationViewEvent: Equatable {
     case plusPressed
     case minusPressed
     case pause
