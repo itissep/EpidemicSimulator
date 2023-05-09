@@ -27,6 +27,7 @@
 		2CA47DAD2A0A2780009531F5 /* VictimModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CA47DAC2A0A2780009531F5 /* VictimModel.swift */; };
 		2CA47DB02A0A3FA7009531F5 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CA47DAF2A0A3FA7009531F5 /* Coordinator.swift */; };
 		2CA47DB22A0A3FC4009531F5 /* BaseCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CA47DB12A0A3FC4009531F5 /* BaseCoordinator.swift */; };
+		2CE166F42A0AA9B600703274 /* UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CE166F32A0AA9B600703274 /* UIViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -52,6 +53,7 @@
 		2CA47DAC2A0A2780009531F5 /* VictimModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VictimModel.swift; sourceTree = "<group>"; };
 		2CA47DAF2A0A3FA7009531F5 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		2CA47DB12A0A3FC4009531F5 /* BaseCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCoordinator.swift; sourceTree = "<group>"; };
+		2CE166F32A0AA9B600703274 /* UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,6 +106,7 @@
 				2CA47D8E2A092B75009531F5 /* UIView.swift */,
 				2CA47DA32A097CFD009531F5 /* Collection.swift */,
 				2CA47D942A0945A3009531F5 /* UITextField.swift */,
+				2CE166F32A0AA9B600703274 /* UIViewController.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -302,6 +305,7 @@
 				2CA47D8F2A092B75009531F5 /* UIView.swift in Sources */,
 				2CA47DB22A0A3FC4009531F5 /* BaseCoordinator.swift in Sources */,
 				2CA47D8B2A0925FA009531F5 /* Style.swift in Sources */,
+				2CE166F42A0AA9B600703274 /* UIViewController.swift in Sources */,
 				2CA47D6D2A0923A4009531F5 /* AppDelegate.swift in Sources */,
 				2CA47DA82A0A22FA009531F5 /* EpidemicCalculator.swift in Sources */,
 				2CA47D972A094828009531F5 /* EntryViewModel.swift in Sources */,
@@ -462,6 +466,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -492,6 +497,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

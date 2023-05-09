@@ -37,9 +37,10 @@ final class CustomTextField: UITextField {
     
     private func layout() {
         self.backgroundColor = Styles.Color.mustardWithAlpha
-        self.keyboardType = .numberPad
+        self.keyboardType = .phonePad
         self.layer.cornerRadius = Styles.cornerRadius
         self.layer.masksToBounds = true
+        self.tintColor = Styles.Color.yellow
         
         self.font = Styles.inputFont
         self.textColor = Styles.Color.yellow

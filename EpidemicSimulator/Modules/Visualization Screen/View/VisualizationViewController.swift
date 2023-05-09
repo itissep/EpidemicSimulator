@@ -12,6 +12,7 @@ import Combine
 #warning("FIXIT: plus minus")
 
 final class VisualizationViewController: UIViewController {
+    
     private lazy var groupSizeLabel = UILabel()
     private lazy var infectionFactorLabel = UILabel()
     private lazy var calculationFrequencyLabel = UILabel()
@@ -75,6 +76,12 @@ final class VisualizationViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         eventPublisher.send(.delete)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        navigationController?.navigationBar.barStyle = .default
     }
     
     // MARK: - Binding

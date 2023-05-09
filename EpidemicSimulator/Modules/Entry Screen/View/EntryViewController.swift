@@ -7,8 +7,6 @@
 
 import UIKit
 import Combine
-#warning("TODO: scroll for keyboard")
-#warning("TODO: add bar style")
 
 final class EntryViewController: UIViewController {
     
@@ -27,8 +25,10 @@ final class EntryViewController: UIViewController {
         
         return UICollectionView(frame: .zero, collectionViewLayout: layout)
     }()
-
+    
     private lazy var runButton = UIButton()
+    private var bottomConstraint: NSLayoutConstraint?
+    var keyboardHeightLayoutConstraint: NSLayoutConstraint?
     
     private var cellSize: CGFloat?
     
@@ -55,6 +55,8 @@ final class EntryViewController: UIViewController {
         generalSetup()
         setupBinding()
         setupInputPublishers()
+        setupNotifications()
+        hideKeyboardWhenTappedAround()
     }
     
     override func viewDidLayoutSubviews() {
@@ -66,6 +68,16 @@ final class EntryViewController: UIViewController {
         infectionFactorSetup()
         groupSizeSetup()
         captureSetup()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        navigationController?.navigationBar.barStyle = .black
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
     
     // MARK: - Binding
@@ -116,7 +128,7 @@ final class EntryViewController: UIViewController {
     
     private func groupSizeSetup() {
         view.addSubviews([groupSizeLabel, groupSizeInput])
-
+        
         groupSizeInput.setPlaceholder("number of future victims")
         
         NSLayoutConstraint.activate([
@@ -201,16 +213,69 @@ final class EntryViewController: UIViewController {
                             action: #selector(runButtonPressed),
                             for: .touchUpInside)
         
+        bottomConstraint = runButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -Styles.padding)
+        keyboardHeightLayoutConstraint = runButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -Styles.padding)
         view.addSubviews([runButton])
         NSLayoutConstraint.activate([
             runButton.heightAnchor.constraint(equalToConstant: 70),
             runButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Styles.padding),
             runButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -Styles.padding),
-            runButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -Styles.padding)
         ])
+        bottomConstraint?.isActive = true
+    }
+    
+    // MARK: - Notifications setup
+    
+    private func setupNotifications() {
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(keyboardWillShow(_ :)),
+                                               name: UIResponder.keyboardWillShowNotification,
+                                               object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(keyboardWillHide(_ :)),
+                                               name: UIResponder.keyboardWillHideNotification,
+                                               object: nil)
+    }
+    
+    private func animateWithKeyboard(
+        notification: Notification,
+        animations: ((_ keyboardFrame: CGRect) -> Void)?
+    ) {
+        guard
+            let userInfo = notification.userInfo,
+            let duration = userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? Double,
+            let keyboardFrameValue = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue,
+            let curveValue = userInfo[UIResponder.keyboardAnimationCurveUserInfoKey] as? Int,
+            let curve = UIView.AnimationCurve(rawValue: curveValue)
+        else {
+            return
+        }
+        
+        let animator = UIViewPropertyAnimator(
+            duration: duration,
+            curve: curve
+        ) { [weak self] in
+            animations?(keyboardFrameValue.cgRectValue)
+            self?.view?.layoutIfNeeded()
+        }
+        animator.startAnimation()
     }
     
     // MARK: - Selectors
+    
+    @objc
+    private func keyboardWillShow(_ notification: Notification) {
+        animateWithKeyboard(notification: notification) {[weak self] keyboardFrame in
+            self?.view.frame.origin.y = -keyboardFrame.height
+        }
+    }
+    
+    @objc
+    private func keyboardWillHide(_ notification: Notification) {
+        animateWithKeyboard(notification: notification) { [weak self] _ in
+            self?.view.frame.origin.y = 0
+        }
+    }
     
     @objc
     private func runButtonPressed() {
@@ -256,14 +321,14 @@ extension EntryViewController: UICollectionViewDataSource {
 
 extension EntryViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView,
-                  layout collectionViewLayout: UICollectionViewLayout,
-                  insetForSectionAt section: Int) -> UIEdgeInsets {
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
     }
-
+    
     func collectionView(_ collectionView: UICollectionView,
-                   layout collectionViewLayout: UICollectionViewLayout,
-                   sizeForItemAt indexPath: IndexPath) -> CGSize {
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        sizeForItemAt indexPath: IndexPath) -> CGSize {
         let layout = collectionViewLayout as! UICollectionViewFlowLayout
         
         let widthPerItem = (view.frame.width - (Styles.padding * 2) - layout.minimumInteritemSpacing) / 9
