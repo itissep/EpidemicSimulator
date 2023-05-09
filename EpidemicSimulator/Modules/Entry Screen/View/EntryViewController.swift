@@ -247,6 +247,7 @@ extension EntryViewController: UICollectionViewDataSource {
         guard let cell = cell as? FactorCollectionCell else {
             fatalError("Error with FactorCollectionCell")
         }
+        cell.setNumber(for: indexPath)
         return cell
     }
 }

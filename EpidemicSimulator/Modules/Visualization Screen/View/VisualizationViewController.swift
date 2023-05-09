@@ -7,9 +7,9 @@
 
 import UIKit
 import Combine
-#warning("TODO: stop button")
+
 #warning("FIXIT: cornerRadius configuration for cells")
-#warning("TODO: play and pause button")
+#warning("FIXIT: plus minus")
 
 final class VisualizationViewController: UIViewController {
     private lazy var groupSizeLabel = UILabel()
@@ -23,8 +23,7 @@ final class VisualizationViewController: UIViewController {
     
     private lazy var plusButton = UIButton()
     private lazy var minusButton = UIButton()
-    
-    private lazy var stopButton = UIButton()
+
     private lazy var pauseButton = UIButton()
     
     private var collectionView: UICollectionView = {
@@ -67,6 +66,7 @@ final class VisualizationViewController: UIViewController {
         
         setupCollectionView()
         setupTitle()
+        setupPauseButton()
         
         setupInfoLabels()
         setupZoomButtons()
@@ -95,6 +95,32 @@ final class VisualizationViewController: UIViewController {
                 }, completion: nil)
             }
             .store(in: &subscriptions)
+        
+        viewModel.$isRunning
+            .sink {[weak self] isRunning in
+                self?.configurePauseButton(isRunning)
+            }
+            .store(in: &subscriptions)
+        
+        viewModel.$isFinished
+            .sink { [weak self] isOn in
+                self?.pauseButton.isEnabled = !isOn
+            }
+            .store(in: &subscriptions)
+        
+        viewModel.$parameters
+            .sink {[weak self] data in
+                self?.configureInfoLabels(data)
+            }
+            .store(in: &subscriptions)
+    }
+    
+    private func configureInfoLabels(_ data: (group: Int, factor: Int, interval: Int)?) {
+        guard let data else {
+            return }
+        groupSizeLabel.text = "\(data.group)"
+        infectionFactorLabel.text = "\(data.factor) neighbors"
+        calculationFrequencyLabel.text = "per \(data.interval)sec"
     }
     
     // MARK: - UI Setup
@@ -104,10 +130,6 @@ final class VisualizationViewController: UIViewController {
     }
     
     private func setupInfoLabels() {
-        groupSizeLabel.text = "100"
-        infectionFactorLabel.text = "4 neighbors"
-        calculationFrequencyLabel.text = "per 10sec"
-        
         groupSizeLabel.textColor = Styles.Color.black
         groupSizeLabel.font = Styles.titleFont
         groupSizeLabel.textAlignment = .right
@@ -144,16 +166,34 @@ final class VisualizationViewController: UIViewController {
         view.addSubviews([titleLabel])
         NSLayoutConstraint.activate([
             titleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Styles.padding),
-            titleLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: Styles.padding),
             titleLabel.bottomAnchor.constraint(equalTo: collectionView.topAnchor, constant: -Styles.padding)
         ])
     }
     
-    private func setupZoomButtons() {
+    private func setupPauseButton() {
+        pauseButton.addTarget(self, action: #selector(pauseWasPressed), for: .touchUpInside)
+    
+        view.addSubviews([pauseButton])
+        NSLayoutConstraint.activate([
+            pauseButton.centerYAnchor.constraint(equalTo: titleLabel.centerYAnchor),
+            pauseButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -Styles.padding),
+            pauseButton.heightAnchor.constraint(equalToConstant: 40),
+            pauseButton.widthAnchor.constraint(equalToConstant: 40),
+        ])
+    }
+    
+    private func configurePauseButton(_ isRunning: Bool) {
         let config = UIImage.SymbolConfiguration(
             pointSize: 40, weight: .medium, scale: .default)
-        plusButton.setImage(UIImage(systemName: "plus.circle.fill", withConfiguration: config), for: .normal)
-        minusButton.setImage(UIImage(systemName: "minus.circle.fill", withConfiguration: config), for: .normal)
+        let imageName = isRunning ? "pause.fill" : "play.fill"
+        pauseButton.setImage(UIImage(systemName: imageName, withConfiguration: config), for: .normal)
+    }
+    
+    private func setupZoomButtons() {
+        let config = UIImage.SymbolConfiguration(
+            pointSize: 40, weight: .bold, scale: .medium)
+        plusButton.setImage(UIImage(systemName: "plus", withConfiguration: config), for: .normal)
+        minusButton.setImage(UIImage(systemName: "minus", withConfiguration: config), for: .normal)
         
         plusButton.addTarget(self, action: #selector(plusWasPressed), for: .touchUpInside)
         minusButton.addTarget(self, action: #selector(minusWasPressed), for: .touchUpInside)
@@ -195,6 +235,10 @@ final class VisualizationViewController: UIViewController {
     }
     
     // MARK: - Selectors
+    @objc
+    private func pauseWasPressed() {
+        eventPublisher.send(.pause)
+    }
     
     @objc
     private func plusWasPressed() {

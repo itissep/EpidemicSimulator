@@ -7,13 +7,13 @@
 
 import Foundation
 #warning("FIXIT: lines problem")
-#warning("TODO: stop feature")
 #warning("FIXIT: out of range problem")
 
 // MARK: - EpidemicCalculatorDelegate
 
 protocol EpidemicCalculatorDelegate: AnyObject {
     func update(with items: [Bool])
+    func finish()
 }
 
 // MARK: - EpidemicCalculatorDescription
@@ -65,12 +65,11 @@ final class EpidemicCalculator: EpidemicCalculatorDescription {
     }
     
     private func step() {
-        guard checkForHealthy() else {
-            print(sickItems.sorted(by: <))
-            return }
         queue.asyncAfter(deadline: .now() + .seconds(interval), execute: {[weak self] in
-            self?.calculate()
-            self?.step()
+            guard let self else { return }
+            guard self.checkForHealthy() && self.isRunning else { return }
+            self.calculate()
+            self.step()
         })
     }
     
@@ -112,7 +111,13 @@ final class EpidemicCalculator: EpidemicCalculatorDescription {
     }
     
     private func checkForHealthy() -> Bool {
-        return sickItems.count <= count
+        let result = sickItems.count <= count
+        if !result {
+            DispatchQueue.main.async {[weak self] in
+                self?.delegate?.finish()
+            }
+        }
+        return result
     }
 
     private func infectNeighbors(for index: Int, _ completion: @escaping () -> Void) {

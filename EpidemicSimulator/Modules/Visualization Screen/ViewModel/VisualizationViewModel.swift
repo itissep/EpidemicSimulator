@@ -9,8 +9,11 @@ import Foundation
 import Combine
 
 final class VisualizationViewModel: NSObject {
+    @Published var parameters: (group: Int, factor: Int, interval: Int)? = nil
     @Published var itemsPerLine: CGFloat = 6
     @Published var cellModels: [VictimModel] = []
+    @Published var isRunning: Bool = false
+    @Published var isFinished: Bool = true
     
     private var eventPublisher: AnyPublisher<VisualizationViewEvent, Never> = PassthroughSubject<VisualizationViewEvent, Never>().eraseToAnyPublisher()
     private var subscriptions = Set<AnyCancellable>()
@@ -30,6 +33,7 @@ final class VisualizationViewModel: NSObject {
         self.coordinator = coordinator
         super.init()
         
+        parameters = (groupSize, factor, frequency)
         calculator.delegate = self
     }
     
@@ -40,13 +44,25 @@ final class VisualizationViewModel: NSObject {
                 switch event {
                 case .plusPressed, .minusPressed:
                     self?.changeLineNumber(for: event)
-                case .pause, .delete:
+                case .pause:
+                    self?.pause()
+                case .delete:
                     self?.calculator.pause()
                 case .wasSelectedAt(let indexPath):
+                    self?.isFinished = false
+                    self?.isRunning = true
                     self?.calculator.add(with: indexPath.row)
                 }
             }
             .store(in: &subscriptions)
+    }
+    private func pause() {
+        if isRunning {
+            calculator.pause()
+        } else {
+            calculator.run()
+        }
+        isRunning.toggle()
     }
     
     private func changeLineNumber(for event: VisualizationViewEvent) {
@@ -67,5 +83,10 @@ final class VisualizationViewModel: NSObject {
 extension VisualizationViewModel: EpidemicCalculatorDelegate {
     func update(with items: [Bool]) {
         cellModels = items.map({VictimModel($0)})
+    }
+    
+    func finish() {
+        isFinished = true
+        isRunning = false
     }
 }
