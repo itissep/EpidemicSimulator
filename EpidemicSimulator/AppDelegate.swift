@@ -13,9 +13,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         window = UIWindow()
-        let viewModel = EntryViewModel()
+        let viewModel = VisualizationViewModel(groupSize: 200, factor: 3, frequency: 1)
 //        let vc = EntryViewController(viewModel: viewModel)
-        let vc = VisualizationViewController()
+        let vc = VisualizationViewController(viewModel: viewModel)
         let navController = UINavigationController(rootViewController: vc)
         
         window?.rootViewController = navController

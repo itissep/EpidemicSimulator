@@ -19,7 +19,12 @@
 		2CA47D992A09483F009531F5 /* EntryViewEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CA47D982A09483F009531F5 /* EntryViewEvent.swift */; };
 		2CA47D9E2A0948EB009531F5 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CA47D9D2A0948EB009531F5 /* CustomTextField.swift */; };
 		2CA47DA02A094E7B009531F5 /* VisualizationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CA47D9F2A094E7B009531F5 /* VisualizationViewController.swift */; };
-		2CA47DA22A097981009531F5 /* CollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CA47DA12A097981009531F5 /* CollectionCell.swift */; };
+		2CA47DA22A097981009531F5 /* VictimCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CA47DA12A097981009531F5 /* VictimCollectionCell.swift */; };
+		2CA47DA42A097CFD009531F5 /* Collection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CA47DA32A097CFD009531F5 /* Collection.swift */; };
+		2CA47DA62A0A22C4009531F5 /* VisualizationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CA47DA52A0A22C4009531F5 /* VisualizationViewModel.swift */; };
+		2CA47DA82A0A22FA009531F5 /* EpidemicCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CA47DA72A0A22FA009531F5 /* EpidemicCalculator.swift */; };
+		2CA47DAB2A0A2328009531F5 /* VisualizationEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CA47DAA2A0A2328009531F5 /* VisualizationEvent.swift */; };
+		2CA47DAD2A0A2780009531F5 /* VictimModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CA47DAC2A0A2780009531F5 /* VictimModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,7 +42,12 @@
 		2CA47D982A09483F009531F5 /* EntryViewEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryViewEvent.swift; sourceTree = "<group>"; };
 		2CA47D9D2A0948EB009531F5 /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		2CA47D9F2A094E7B009531F5 /* VisualizationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisualizationViewController.swift; sourceTree = "<group>"; };
-		2CA47DA12A097981009531F5 /* CollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionCell.swift; sourceTree = "<group>"; };
+		2CA47DA12A097981009531F5 /* VictimCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VictimCollectionCell.swift; sourceTree = "<group>"; };
+		2CA47DA32A097CFD009531F5 /* Collection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Collection.swift; sourceTree = "<group>"; };
+		2CA47DA52A0A22C4009531F5 /* VisualizationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisualizationViewModel.swift; sourceTree = "<group>"; };
+		2CA47DA72A0A22FA009531F5 /* EpidemicCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpidemicCalculator.swift; sourceTree = "<group>"; };
+		2CA47DAA2A0A2328009531F5 /* VisualizationEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisualizationEvent.swift; sourceTree = "<group>"; };
+		2CA47DAC2A0A2780009531F5 /* VictimModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VictimModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,6 +97,7 @@
 			isa = PBXGroup;
 			children = (
 				2CA47D8E2A092B75009531F5 /* UIView.swift */,
+				2CA47DA32A097CFD009531F5 /* Collection.swift */,
 				2CA47D942A0945A3009531F5 /* UITextField.swift */,
 			);
 			path = Extensions;
@@ -104,6 +115,7 @@
 		2CA47D822A09243A009531F5 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				2CA47DA72A0A22FA009531F5 /* EpidemicCalculator.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -129,6 +141,7 @@
 		2CA47D852A092465009531F5 /* Visualization Screen */ = {
 			isa = PBXGroup;
 			children = (
+				2CA47DA92A0A2314009531F5 /* Model */,
 				2CA47D872A09249C009531F5 /* ViewModel */,
 				2CA47D862A092498009531F5 /* View */,
 			);
@@ -139,7 +152,7 @@
 			isa = PBXGroup;
 			children = (
 				2CA47D9F2A094E7B009531F5 /* VisualizationViewController.swift */,
-				2CA47DA12A097981009531F5 /* CollectionCell.swift */,
+				2CA47DA12A097981009531F5 /* VictimCollectionCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -147,6 +160,7 @@
 		2CA47D872A09249C009531F5 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				2CA47DA52A0A22C4009531F5 /* VisualizationViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -190,6 +204,15 @@
 				2CA47D9D2A0948EB009531F5 /* CustomTextField.swift */,
 			);
 			path = CustomTextField;
+			sourceTree = "<group>";
+		};
+		2CA47DA92A0A2314009531F5 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				2CA47DAA2A0A2328009531F5 /* VisualizationEvent.swift */,
+				2CA47DAC2A0A2780009531F5 /* VictimModel.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -265,13 +288,18 @@
 				2CA47D8F2A092B75009531F5 /* UIView.swift in Sources */,
 				2CA47D8B2A0925FA009531F5 /* Style.swift in Sources */,
 				2CA47D6D2A0923A4009531F5 /* AppDelegate.swift in Sources */,
+				2CA47DA82A0A22FA009531F5 /* EpidemicCalculator.swift in Sources */,
 				2CA47D972A094828009531F5 /* EntryViewModel.swift in Sources */,
 				2CA47D8D2A0927F1009531F5 /* EntryViewController.swift in Sources */,
+				2CA47DA62A0A22C4009531F5 /* VisualizationViewModel.swift in Sources */,
 				2CA47D912A093875009531F5 /* FactorCollectionCell.swift in Sources */,
 				2CA47D992A09483F009531F5 /* EntryViewEvent.swift in Sources */,
+				2CA47DAD2A0A2780009531F5 /* VictimModel.swift in Sources */,
+				2CA47DAB2A0A2328009531F5 /* VisualizationEvent.swift in Sources */,
 				2CA47DA02A094E7B009531F5 /* VisualizationViewController.swift in Sources */,
 				2CA47D952A0945A3009531F5 /* UITextField.swift in Sources */,
-				2CA47DA22A097981009531F5 /* CollectionCell.swift in Sources */,
+				2CA47DA42A097CFD009531F5 /* Collection.swift in Sources */,
+				2CA47DA22A097981009531F5 /* VictimCollectionCell.swift in Sources */,
 				2CA47D9E2A0948EB009531F5 /* CustomTextField.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

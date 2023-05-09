@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class CollectionCell: UICollectionViewCell {
+final class VictimCollectionCell: UICollectionViewCell {
     class var identifier: String { return String(describing: self) }
     
     override init(frame: CGRect) {
@@ -20,12 +20,8 @@ final class CollectionCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func select() {
-        contentView.backgroundColor = Styles.Color.black
-    }
-    
-    func deselect() {
-        contentView.backgroundColor = Styles.Color.mustard
+    func configure(with isSelected: Bool) {
+        contentView.backgroundColor = isSelected ? Styles.Color.black : Styles.Color.mustard
     }
     
     func configureAppearance(with size: CGFloat) {
@@ -35,5 +31,6 @@ final class CollectionCell: UICollectionViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
+        self.isSelected = false
     }
 }

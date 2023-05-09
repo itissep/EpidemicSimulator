@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Combine
 #warning("TODO: stop button")
 #warning("FIXIT: cornerRadius configuration for cells")
 #warning("TODO: play and pause button")
@@ -34,13 +35,31 @@ final class VisualizationViewController: UIViewController {
         
         return UICollectionView(frame: .zero, collectionViewLayout: layout)
     }()
-    
+
     private var itemsPerLine: CGFloat = 16
+    
+    private var eventPublisher = PassthroughSubject<VisualizationViewEvent, Never>()
+    private var subscriptions = Set<AnyCancellable>()
+    
+    private let viewModel: VisualizationViewModel
+    
+    // MARK: - Life Cycle
+    
+    init(viewModel: VisualizationViewModel){
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+        
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         generalSetup()
+        setupBinding()
     }
     
     override func viewDidLayoutSubviews() {
@@ -51,8 +70,29 @@ final class VisualizationViewController: UIViewController {
         
         setupInfoLabels()
         setupZoomButtons()
-        
     }
+    
+    // MARK: - Binding
+    
+    private func setupBinding() {
+        viewModel.attachEventListener(with: eventPublisher.eraseToAnyPublisher())
+        viewModel.$cellModels
+            .sink {[weak self] models in
+                self?.collectionView.reloadData()
+            }
+            .store(in: &subscriptions)
+        
+        viewModel.$itemsPerLine
+            .sink { [weak self] number in
+                self?.itemsPerLine = number
+                self?.collectionView.performBatchUpdates({
+                    self?.collectionView.reloadData()
+                }, completion: nil)
+            }
+            .store(in: &subscriptions)
+    }
+    
+    // MARK: - UI Setup
     
     private func generalSetup() {
         view.backgroundColor = Styles.Color.yellow
@@ -134,8 +174,8 @@ final class VisualizationViewController: UIViewController {
     private func setupCollectionView() {
         collectionView.delegate = self
         collectionView.dataSource = self
-        collectionView.register(CollectionCell.self,
-                                forCellWithReuseIdentifier: CollectionCell.identifier)
+        collectionView.register(VictimCollectionCell.self,
+                                forCellWithReuseIdentifier: VictimCollectionCell.identifier)
         collectionView.allowsMultipleSelection = true
         
         collectionView.backgroundColor = Styles.Color.yellow
@@ -153,18 +193,12 @@ final class VisualizationViewController: UIViewController {
     
     @objc
     private func plusWasPressed() {
-        itemsPerLine += 1
-        collectionView.performBatchUpdates({
-            collectionView.reloadData()
-        }, completion: nil)
+        eventPublisher.send(.plusPressed)
     }
     
     @objc
     private func minusWasPressed() {
-        itemsPerLine -= 1
-        collectionView.performBatchUpdates({
-            collectionView.reloadData()
-        }, completion: nil)
+        eventPublisher.send(.minusPressed)
     }
 }
 
@@ -173,16 +207,7 @@ final class VisualizationViewController: UIViewController {
 
 extension VisualizationViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let cell = collectionView.cellForItem(at: indexPath)
-        guard let cell = cell as? CollectionCell else { return }
-        cell.select()
-//        eventPublisher.send(.infectionFactorWasSet(indexPath.row))
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
-        let cell = collectionView.cellForItem(at: indexPath)
-        guard let cell = cell as? CollectionCell else { return }
-        cell.deselect()
+        eventPublisher.send(.wasSelectedAt(indexPath))
     }
 }
 
@@ -190,14 +215,15 @@ extension VisualizationViewController: UICollectionViewDelegate {
 
 extension VisualizationViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        100
+        viewModel.cellModels.count
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CollectionCell.identifier, for: indexPath)
-        guard let cell = cell as? CollectionCell else {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: VictimCollectionCell.identifier, for: indexPath)
+        guard let cell = cell as? VictimCollectionCell else {
             fatalError("Error with CollectionCell")
         }
+        cell.configure(with: viewModel.cellModels[indexPath.row].isSick)
         cell.configureAppearance(with: 20)
         return cell
     }
@@ -207,15 +233,15 @@ extension VisualizationViewController: UICollectionViewDataSource {
 
 extension VisualizationViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView,
-                  layout collectionViewLayout: UICollectionViewLayout,
-                  insetForSectionAt section: Int) -> UIEdgeInsets {
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: 0, left: Styles.padding, bottom: 0, right: Styles.padding)
     }
-
+    
     func collectionView(_ collectionView: UICollectionView,
-                   layout collectionViewLayout: UICollectionViewLayout,
-                   sizeForItemAt indexPath: IndexPath) -> CGSize {
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        sizeForItemAt indexPath: IndexPath) -> CGSize {
         let side = (collectionView.frame.width) / CGFloat(itemsPerLine)
-        return CGSize(width: side-5, height: side-5)
+        return CGSize(width: side - 5, height: side - 5)
     }
 }
