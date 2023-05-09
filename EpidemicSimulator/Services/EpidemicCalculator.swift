@@ -6,13 +6,11 @@
 //
 
 import Foundation
-#warning("FIXIT: lines problem")
-#warning("FIXIT: out of range problem")
 
 // MARK: - EpidemicCalculatorDelegate
 
 protocol EpidemicCalculatorDelegate: AnyObject {
-    func update(with items: [Bool])
+    func update(with items: [Bool], progress: CGFloat)
     func finish()
 }
 
@@ -74,7 +72,8 @@ final class EpidemicCalculator: EpidemicCalculatorDescription {
     }
     
     private func update() {
-        delegate?.update(with: getAll())
+        let progress: CGFloat = CGFloat(sickItems.count) / CGFloat(count)
+        delegate?.update(with: getAll(), progress: progress)
     }
     
     private func getAll() -> [Bool] {
@@ -111,7 +110,7 @@ final class EpidemicCalculator: EpidemicCalculatorDescription {
     }
     
     private func checkForHealthy() -> Bool {
-        let result = sickItems.count <= count
+        let result = sickItems.count < count
         if !result {
             DispatchQueue.main.async {[weak self] in
                 self?.delegate?.finish()
@@ -160,6 +159,7 @@ final class EpidemicCalculator: EpidemicCalculatorDescription {
         
         var set: Set<Int> = []
         array.forEach { neighbor in
+            guard neighbor < count else { return }
             guard neighbor != -1 else { return }
             guard !sickItems.contains(neighbor) else { return }
             set.insert(neighbor)

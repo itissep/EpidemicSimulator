@@ -8,14 +8,14 @@
 import UIKit
 import Combine
 
-#warning("FIXIT: cornerRadius configuration for cells")
-#warning("FIXIT: plus minus")
-
 final class VisualizationViewController: UIViewController {
     
     private lazy var groupSizeLabel = UILabel()
+    private lazy var sickPopulationLabel = UILabel()
     private lazy var infectionFactorLabel = UILabel()
     private lazy var calculationFrequencyLabel = UILabel()
+    
+    private lazy var progressLabel = UILabel()
     
     private lazy var healthyLabel = UILabel()
     private lazy var sickLabel = UILabel()
@@ -24,18 +24,18 @@ final class VisualizationViewController: UIViewController {
     
     private lazy var plusButton = UIButton()
     private lazy var minusButton = UIButton()
-
+    
     private lazy var pauseButton = UIButton()
     
     private var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
-        layout.minimumLineSpacing = 0
-        layout.minimumInteritemSpacing = 0
+        layout.minimumLineSpacing = 2
+        layout.minimumInteritemSpacing = 2
         
         return UICollectionView(frame: .zero, collectionViewLayout: layout)
     }()
-
+    
     private var itemsPerLine: CGFloat = 16
     
     private var eventPublisher = PassthroughSubject<VisualizationViewEvent, Never>()
@@ -71,6 +71,7 @@ final class VisualizationViewController: UIViewController {
         
         setupInfoLabels()
         setupZoomButtons()
+        setupProgressLabel()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -120,6 +121,13 @@ final class VisualizationViewController: UIViewController {
                 self?.configureInfoLabels(data)
             }
             .store(in: &subscriptions)
+        
+        viewModel.$progress
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] progress in
+                self?.configureProgress(with: progress)
+            }
+            .store(in: &subscriptions)
     }
     
     private func configureInfoLabels(_ data: (group: Int, factor: Int, interval: Int)?) {
@@ -165,8 +173,25 @@ final class VisualizationViewController: UIViewController {
         ])
     }
     
+    private func setupProgressLabel() {
+        progressLabel.textColor = Styles.Color.black
+        progressLabel.font = Styles.titleFont
+        
+        view.addSubviews([progressLabel])
+        NSLayoutConstraint.activate([
+            progressLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Styles.padding),
+            progressLabel.bottomAnchor.constraint(equalTo: titleLabel.topAnchor),
+        ])
+    }
+    
+    private func configureProgress(with progress: CGFloat) {
+        progressLabel.isHidden = progress == 0.0
+        let value = Int(progress * 100)
+        progressLabel.text = "\(value)%"
+    }
+    
     private func setupTitle() {
-        titleLabel.text = "your playground"
+        titleLabel.text = "simulation"
         titleLabel.textColor = Styles.Color.black
         titleLabel.font = Styles.titleFont
         
@@ -179,7 +204,7 @@ final class VisualizationViewController: UIViewController {
     
     private func setupPauseButton() {
         pauseButton.addTarget(self, action: #selector(pauseWasPressed), for: .touchUpInside)
-    
+        
         view.addSubviews([pauseButton])
         NSLayoutConstraint.activate([
             pauseButton.centerYAnchor.constraint(equalTo: titleLabel.centerYAnchor),
@@ -197,10 +222,13 @@ final class VisualizationViewController: UIViewController {
     }
     
     private func setupZoomButtons() {
-        let config = UIImage.SymbolConfiguration(
-            pointSize: 40, weight: .bold, scale: .medium)
-        plusButton.setImage(UIImage(systemName: "plus", withConfiguration: config), for: .normal)
-        minusButton.setImage(UIImage(systemName: "minus", withConfiguration: config), for: .normal)
+        let config = UIImage.SymbolConfiguration(pointSize: 40, weight: .bold)
+        plusButton.setImage(UIImage(systemName: "plus",
+                                    withConfiguration: config),
+                            for: .normal)
+        minusButton.setImage(UIImage(systemName: "minus",
+                                     withConfiguration: config),
+                             for: .normal)
         
         plusButton.addTarget(self, action: #selector(plusWasPressed), for: .touchUpInside)
         minusButton.addTarget(self, action: #selector(minusWasPressed), for: .touchUpInside)
@@ -211,9 +239,9 @@ final class VisualizationViewController: UIViewController {
             minusButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -Styles.padding),
             plusButton.trailingAnchor.constraint(equalTo: minusButton.leadingAnchor, constant: -10),
             
-            plusButton.heightAnchor.constraint(equalToConstant: 40),
+            plusButton.heightAnchor.constraint(equalToConstant: 35),
             plusButton.widthAnchor.constraint(equalToConstant: 40),
-            minusButton.heightAnchor.constraint(equalToConstant: 40),
+            minusButton.heightAnchor.constraint(equalToConstant: 35),
             minusButton.widthAnchor.constraint(equalToConstant: 40),
             
             plusButton.topAnchor.constraint(equalTo: calculationFrequencyLabel.bottomAnchor, constant: Styles.padding),
@@ -273,14 +301,13 @@ extension VisualizationViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         viewModel.cellModels.count
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: VictimCollectionCell.identifier, for: indexPath)
         guard let cell = cell as? VictimCollectionCell else {
             fatalError("Error with CollectionCell")
         }
         cell.configure(with: viewModel.cellModels[indexPath.row].isSick)
-        cell.configureAppearance(with: 20)
         return cell
     }
 }
@@ -291,13 +318,14 @@ extension VisualizationViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 0, left: Styles.padding, bottom: 0, right: Styles.padding)
+        return UIEdgeInsets(top: 2, left: Styles.padding, bottom: 2, right: Styles.padding)
     }
     
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let side = (collectionView.frame.width) / CGFloat(itemsPerLine)
-        return CGSize(width: side - 5, height: side - 5)
+        let marginsAndInsets = 2 * 2 + collectionView.safeAreaInsets.top + collectionView.safeAreaInsets.bottom + 2 * CGFloat(itemsPerLine - 1)
+        let itemWidth = ((collectionView.bounds.size.height - marginsAndInsets) / CGFloat(itemsPerLine)).rounded(.down)
+        return CGSize(width: itemWidth, height: itemWidth)
     }
 }

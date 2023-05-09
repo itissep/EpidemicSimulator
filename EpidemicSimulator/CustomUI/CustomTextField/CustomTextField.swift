@@ -10,7 +10,7 @@ import UIKit
 final class CustomTextField: UITextField {
     init() {
         super.init(frame: .zero)
-        layout()
+        setup()
     }
     
     required init?(coder: NSCoder) {
@@ -30,19 +30,24 @@ final class CustomTextField: UITextField {
      }
     
     func setPlaceholder(_ placeholderString: String) {
-        self.attributedPlaceholder = NSAttributedString(string: placeholderString,
-                                                        attributes: [.foregroundColor: Styles.Color.mustard ?? .yellow,
-                                                                     .font: Styles.inputFont])
+        self.attributedPlaceholder = NSAttributedString(
+            string: placeholderString,
+            attributes: [
+                .foregroundColor: Styles.Color.mustard ?? .yellow,
+                .font: Styles.inputFont
+            ]
+        )
     }
     
-    private func layout() {
+    private func setup() {
         self.backgroundColor = Styles.Color.mustardWithAlpha
-        self.keyboardType = .phonePad
         self.layer.cornerRadius = Styles.cornerRadius
         self.layer.masksToBounds = true
         self.tintColor = Styles.Color.yellow
-        
         self.font = Styles.inputFont
         self.textColor = Styles.Color.yellow
+        
+        self.keyboardType = .phonePad
+        self.keyboardAppearance = .dark
     }
 }

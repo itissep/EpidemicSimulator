@@ -28,6 +28,7 @@
 		2CA47DB02A0A3FA7009531F5 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CA47DAF2A0A3FA7009531F5 /* Coordinator.swift */; };
 		2CA47DB22A0A3FC4009531F5 /* BaseCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CA47DB12A0A3FC4009531F5 /* BaseCoordinator.swift */; };
 		2CE166F42A0AA9B600703274 /* UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CE166F32A0AA9B600703274 /* UIViewController.swift */; };
+		2CE166F92A0AF0FD00703274 /* NSLayoutConstraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CE166F82A0AF0FD00703274 /* NSLayoutConstraint.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -54,6 +55,7 @@
 		2CA47DAF2A0A3FA7009531F5 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		2CA47DB12A0A3FC4009531F5 /* BaseCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCoordinator.swift; sourceTree = "<group>"; };
 		2CE166F32A0AA9B600703274 /* UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewController.swift; sourceTree = "<group>"; };
+		2CE166F82A0AF0FD00703274 /* NSLayoutConstraint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSLayoutConstraint.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,6 +106,7 @@
 			isa = PBXGroup;
 			children = (
 				2CA47D8E2A092B75009531F5 /* UIView.swift */,
+				2CE166F82A0AF0FD00703274 /* NSLayoutConstraint.swift */,
 				2CA47DA32A097CFD009531F5 /* Collection.swift */,
 				2CA47D942A0945A3009531F5 /* UITextField.swift */,
 				2CE166F32A0AA9B600703274 /* UIViewController.swift */,
@@ -318,6 +321,7 @@
 				2CA47DAB2A0A2328009531F5 /* VisualizationEvent.swift in Sources */,
 				2CA47DA02A094E7B009531F5 /* VisualizationViewController.swift in Sources */,
 				2CA47D952A0945A3009531F5 /* UITextField.swift in Sources */,
+				2CE166F92A0AF0FD00703274 /* NSLayoutConstraint.swift in Sources */,
 				2CA47DA42A097CFD009531F5 /* Collection.swift in Sources */,
 				2CA47DA22A097981009531F5 /* VictimCollectionCell.swift in Sources */,
 				2CA47D9E2A0948EB009531F5 /* CustomTextField.swift in Sources */,
@@ -462,6 +466,7 @@
 				DEVELOPMENT_TEAM = 35953V9L7K;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = EpidemicSimulator/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = simulation;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
@@ -493,6 +498,7 @@
 				DEVELOPMENT_TEAM = 35953V9L7K;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = EpidemicSimulator/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = simulation;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;

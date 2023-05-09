@@ -14,6 +14,8 @@ final class VictimCollectionCell: UICollectionViewCell {
         super.init(frame: frame)
         
         contentView.backgroundColor = Styles.Color.mustard
+        contentView.layer.cornerRadius = 10
+        contentView.layer.masksToBounds = true
     }
     
     required init?(coder: NSCoder) {
@@ -22,11 +24,6 @@ final class VictimCollectionCell: UICollectionViewCell {
     
     func configure(with isSelected: Bool) {
         contentView.backgroundColor = isSelected ? Styles.Color.black : Styles.Color.mustard
-    }
-    
-    func configureAppearance(with size: CGFloat) {
-        contentView.layer.cornerRadius = size / 2
-        contentView.layer.masksToBounds = true
     }
     
     override func prepareForReuse() {

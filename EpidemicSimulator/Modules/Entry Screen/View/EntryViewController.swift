@@ -9,7 +9,6 @@ import UIKit
 import Combine
 
 final class EntryViewController: UIViewController {
-    
     private lazy var captureLabel = UILabel()
     private lazy var groupSizeLabel = UILabel()
     private lazy var groupSizeInput = CustomTextField()
@@ -169,9 +168,11 @@ final class EntryViewController: UIViewController {
         
         collectionView.backgroundColor = Styles.Color.black
         
+        let heightConstraint = collectionView.heightAnchor.constraint(equalToConstant: cellSize ?? 50)
+        heightConstraint.priority = .defaultLow
         view.addSubviews([collectionView])
         NSLayoutConstraint.activate([
-            collectionView.heightAnchor.constraint(equalToConstant: cellSize ?? 100),
+            heightConstraint,
             collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Styles.padding),
             collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -Styles.padding),
             collectionView.bottomAnchor.constraint(equalTo: calculationFrequencyLabel.topAnchor, constant: -Styles.padding)
@@ -206,6 +207,7 @@ final class EntryViewController: UIViewController {
         runButton.setTitle("you should fill all fields", for: .disabled)
         runButton.setTitleColor(Styles.Color.black, for: .normal)
         runButton.setTitleColor(Styles.Color.mustardWithAlpha, for: .disabled)
+        runButton.titleLabel?.font =  Styles.inputFont
         
         runButton.layer.cornerRadius = Styles.cornerRadius
         runButton.layer.masksToBounds = true

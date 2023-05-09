@@ -16,4 +16,3 @@ extension UITextField {
             .eraseToAnyPublisher()
     }
 }
-

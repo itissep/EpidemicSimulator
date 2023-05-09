@@ -14,6 +14,7 @@ final class VisualizationViewModel: NSObject {
     @Published var cellModels: [VictimModel] = []
     @Published var isRunning: Bool = false
     @Published var isFinished: Bool = true
+    @Published var progress: CGFloat = 0.0
     
     private var eventPublisher: AnyPublisher<VisualizationViewEvent, Never> = PassthroughSubject<VisualizationViewEvent, Never>().eraseToAnyPublisher()
     private var subscriptions = Set<AnyCancellable>()
@@ -68,7 +69,7 @@ final class VisualizationViewModel: NSObject {
     private func changeLineNumber(for event: VisualizationViewEvent) {
 
         if event == .minusPressed {
-            guard itemsPerLine < 21 else { return }
+            guard itemsPerLine < 20 else { return }
             itemsPerLine += 1
         } else {
             guard itemsPerLine > 5 else { return }
@@ -81,8 +82,9 @@ final class VisualizationViewModel: NSObject {
 // MARK: - EpidemicCalculatorDelegate
 
 extension VisualizationViewModel: EpidemicCalculatorDelegate {
-    func update(with items: [Bool]) {
+    func update(with items: [Bool], progress: CGFloat) {
         cellModels = items.map({VictimModel($0)})
+        self.progress = progress
     }
     
     func finish() {
