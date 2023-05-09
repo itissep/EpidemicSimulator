@@ -22,6 +22,7 @@ protocol EpidemicCalculatorDescription {
     func run()
     func changeLineNumber(with value: Int)
     func add(with index: Int)
+    func pause()
 }
 
 // MARK: - EpidemicCalculator
@@ -52,6 +53,10 @@ final class EpidemicCalculator: EpidemicCalculatorDescription {
         DispatchQueue.main.async { [weak self] in
             self?.update()
         }
+    }
+    
+    func pause() {
+        isRunning = false
     }
     
     func run() {

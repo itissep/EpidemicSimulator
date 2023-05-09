@@ -72,6 +72,11 @@ final class VisualizationViewController: UIViewController {
         setupZoomButtons()
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        eventPublisher.send(.delete)
+    }
+    
     // MARK: - Binding
     
     private func setupBinding() {

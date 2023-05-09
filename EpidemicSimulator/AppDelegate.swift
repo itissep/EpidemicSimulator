@@ -10,13 +10,14 @@ import UIKit
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
+    var coordinator: BaseCoordinatorDescription?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        
         window = UIWindow()
-        let viewModel = VisualizationViewModel(groupSize: 200, factor: 3, frequency: 1)
-//        let vc = EntryViewController(viewModel: viewModel)
-        let vc = VisualizationViewController(viewModel: viewModel)
-        let navController = UINavigationController(rootViewController: vc)
+        let navController = UINavigationController()
+        coordinator = BaseCoordinator(navigationController: navController)
+        coordinator?.start()
         
         window?.rootViewController = navController
         window?.makeKeyAndVisible()

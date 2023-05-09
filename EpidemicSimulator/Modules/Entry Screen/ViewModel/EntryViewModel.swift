@@ -15,11 +15,16 @@ final class EntryViewModel: NSObject {
     private var infectionFactor: Int = 0
     private var calculationFrequency: Int = 0
     
+    private let coordinator: BaseCoordinatorDescription
+    
     @Published private var areFieldsValid: Bool = false
     private var eventPublisher: AnyPublisher<EntryViewEvent, Never> = PassthroughSubject<EntryViewEvent, Never>().eraseToAnyPublisher()
     
     private var subscriptions = Set<AnyCancellable>()
     
+    init(coordinator: BaseCoordinatorDescription) {
+        self.coordinator = coordinator
+    }
     
     func attachEventListener(with subject: AnyPublisher<EntryViewEvent, Never>) {
         self.eventPublisher = subject
@@ -48,6 +53,8 @@ final class EntryViewModel: NSObject {
     }
     
     private func runModulation() {
-        print("run")
+        coordinator.toVisualizationScreen(groupScreen: groupSize,
+                                          infectionFactor: infectionFactor,
+                                          calculationFrequency: calculationFrequency)
     }
 }

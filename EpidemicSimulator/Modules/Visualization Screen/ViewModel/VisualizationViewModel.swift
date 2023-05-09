@@ -17,11 +17,17 @@ final class VisualizationViewModel: NSObject {
     
     private var calculator: EpidemicCalculatorDescription
     private var frequency: Int
+    private let coordinator: BaseCoordinatorDescription
     
-    init(groupSize: Int, factor: Int, frequency: Int) {
+    init(groupSize: Int,
+         factor: Int,
+         frequency: Int,
+         coordinator: BaseCoordinatorDescription
+    ) {
         self.calculator = EpidemicCalculator(factor: factor, count: groupSize, interval: frequency)
         self.frequency = frequency
         self.cellModels = []
+        self.coordinator = coordinator
         super.init()
         
         calculator.delegate = self
@@ -34,10 +40,8 @@ final class VisualizationViewModel: NSObject {
                 switch event {
                 case .plusPressed, .minusPressed:
                     self?.changeLineNumber(for: event)
-                case .pause:
-                    break
-                case .stop:
-                    break
+                case .pause, .delete:
+                    self?.calculator.pause()
                 case .wasSelectedAt(let indexPath):
                     self?.calculator.add(with: indexPath.row)
                 }

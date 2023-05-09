@@ -25,6 +25,8 @@
 		2CA47DA82A0A22FA009531F5 /* EpidemicCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CA47DA72A0A22FA009531F5 /* EpidemicCalculator.swift */; };
 		2CA47DAB2A0A2328009531F5 /* VisualizationEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CA47DAA2A0A2328009531F5 /* VisualizationEvent.swift */; };
 		2CA47DAD2A0A2780009531F5 /* VictimModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CA47DAC2A0A2780009531F5 /* VictimModel.swift */; };
+		2CA47DB02A0A3FA7009531F5 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CA47DAF2A0A3FA7009531F5 /* Coordinator.swift */; };
+		2CA47DB22A0A3FC4009531F5 /* BaseCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CA47DB12A0A3FC4009531F5 /* BaseCoordinator.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -48,6 +50,8 @@
 		2CA47DA72A0A22FA009531F5 /* EpidemicCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpidemicCalculator.swift; sourceTree = "<group>"; };
 		2CA47DAA2A0A2328009531F5 /* VisualizationEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisualizationEvent.swift; sourceTree = "<group>"; };
 		2CA47DAC2A0A2780009531F5 /* VictimModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VictimModel.swift; sourceTree = "<group>"; };
+		2CA47DAF2A0A3FA7009531F5 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
+		2CA47DB12A0A3FC4009531F5 /* BaseCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCoordinator.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,6 +84,7 @@
 		2CA47D6B2A0923A4009531F5 /* EpidemicSimulator */ = {
 			isa = PBXGroup;
 			children = (
+				2CA47DAE2A0A3F93009531F5 /* Coordinator */,
 				2CA47D9B2A0948C4009531F5 /* CustomUI */,
 				2CA47D802A09242D009531F5 /* Extensions */,
 				2CA47D822A09243A009531F5 /* Services */,
@@ -215,6 +220,15 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		2CA47DAE2A0A3F93009531F5 /* Coordinator */ = {
+			isa = PBXGroup;
+			children = (
+				2CA47DAF2A0A3FA7009531F5 /* Coordinator.swift */,
+				2CA47DB12A0A3FC4009531F5 /* BaseCoordinator.swift */,
+			);
+			path = Coordinator;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -286,6 +300,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2CA47D8F2A092B75009531F5 /* UIView.swift in Sources */,
+				2CA47DB22A0A3FC4009531F5 /* BaseCoordinator.swift in Sources */,
 				2CA47D8B2A0925FA009531F5 /* Style.swift in Sources */,
 				2CA47D6D2A0923A4009531F5 /* AppDelegate.swift in Sources */,
 				2CA47DA82A0A22FA009531F5 /* EpidemicCalculator.swift in Sources */,
@@ -295,6 +310,7 @@
 				2CA47D912A093875009531F5 /* FactorCollectionCell.swift in Sources */,
 				2CA47D992A09483F009531F5 /* EntryViewEvent.swift in Sources */,
 				2CA47DAD2A0A2780009531F5 /* VictimModel.swift in Sources */,
+				2CA47DB02A0A3FA7009531F5 /* Coordinator.swift in Sources */,
 				2CA47DAB2A0A2328009531F5 /* VisualizationEvent.swift in Sources */,
 				2CA47DA02A094E7B009531F5 /* VisualizationViewController.swift in Sources */,
 				2CA47D952A0945A3009531F5 /* UITextField.swift in Sources */,

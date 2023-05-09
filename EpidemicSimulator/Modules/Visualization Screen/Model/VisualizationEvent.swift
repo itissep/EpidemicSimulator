@@ -11,6 +11,6 @@ enum VisualizationViewEvent: Equatable {
     case plusPressed
     case minusPressed
     case pause
-    case stop
+    case delete
     case wasSelectedAt(IndexPath)
 }
